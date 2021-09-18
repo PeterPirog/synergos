@@ -1,0 +1,7 @@
+include *.py
+include *.txt
+recursive-include synergos *.py
+recursive-include tests *.py
+
+include LICENSE
+include README.md
