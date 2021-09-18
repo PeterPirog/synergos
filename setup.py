@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 setup(
     name='synergos',
     version='0.0.1',
-    description='Package of ML useful tools',
+    description='Package of some useful ML functions and tools',
     py_modules=['synergos'],
     package_dir={'': 'synergos'},
     classifiers=[
