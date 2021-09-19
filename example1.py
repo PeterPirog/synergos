@@ -1,3 +1,3 @@
-from synergos.functions.hello import say_hello
+from synergos.functions.functions import say_hello
 
 print(say_hello("Tom"))

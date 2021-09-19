@@ -11,7 +11,7 @@ $ pip install synergos
 ## Usage
 
 ```python
-from synergos.functions.hello import say_hello
+from synergos.functions.functions import say_hello
 
 # Generate "Hello World!
 say_hello()
