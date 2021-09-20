@@ -1,4 +1,4 @@
-from synergos.functions.functions import say_hello
+from functions import say_hello
 
 
 def test_helloworld_no_params():
