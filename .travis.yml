@@ -2,7 +2,6 @@ language: python
 
 os:
   - linux
-  - windows
 
 dist: focal
 
@@ -18,6 +17,9 @@ python:
 
 install:
   - pip install tox
+  - pip install twine
 
 script:
   - tox -v -e py
+  - python setup.py bdist_wheel sdist
+  - twine upload dist/*
