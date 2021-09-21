@@ -5,13 +5,12 @@ with open("README.md", "r") as fh:
 
 setup(
     name='synergos',
-    version='0.0.1',
+    version='0.0.2',
     description='Package of some useful ML functions and tools',
     py_modules=['synergos'],
     package_dir={'': 'synergos'},
     classifiers=[
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
@@ -30,6 +29,7 @@ setup(
             "pytest>=3.7",
             "tox>=3.24.3",
             "check-manifest",
+            "openpyxl",
             "twine"
         ],
     },

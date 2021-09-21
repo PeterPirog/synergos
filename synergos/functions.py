@@ -2,13 +2,6 @@ import numpy as np
 from collections.abc import Iterable
 
 
-def say_hello(name=None):
-    if name is None:
-        return "Hello, World!"
-    else:
-        return f"Hello, {name}!"
-
-
 def yeo_johnson_inverse(x, lmbda):
     """Return inverse-transformed input x following Yeo-Johnson inverse
     transform with parameter lambda.
