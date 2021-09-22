@@ -11,19 +11,24 @@ $ pip install synergos
 ## Usage of functions
 ### PercentileTargetEncoder
 param: 
-    features: list of features for encoding, if None transformer find categorical values automatically
+features: list of features for encoding, if None transformer find categorical values automatically
+
 param: 
-    ignored_features: list of ignored features when features are found automatically with option features = None
+ignored_features: list of ignored features when features are found automatically with option features = None
 param: 
-    p: percentil value to calculate new feature, default value is 0.5 (median), range  0<p<1, single value or list of values
+p: percentil value to calculate new feature, default value is 0.5 (median), range  0<p<1, single value or list of values
+
 param: 
-    m: regularization parameter to prevent overfitting, default value is 1, int in range for 1 to np.inf, single value or list of values
+m: regularization parameter to prevent overfitting, default value is 1, int in range for 1 to np.inf, single value or list of values
+
 param: 
-    remove_original: if True original categorical value is dropped, default value is True
+remove_original: if True original categorical value is dropped, default value is True
+
 param: 
-    return_df: if True pd.Dataframe as return, if False np.array as return, default value is True
+return_df: if True pd.Dataframe as return, if False np.array as return, default value is True
+
 param: 
-    use_internal_yeo_johnson: if True, yeo-johnson transformation is used to normalize 'Target' before encoding, default value is False
+use_internal_yeo_johnson: if True, yeo-johnson transformation is used to normalize 'Target' before encoding, default value is False
 ```python
     import pandas as pd
     from synergos.transformers import PercentileTargetEncoder
