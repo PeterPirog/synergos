@@ -135,12 +135,9 @@ class PercentileTargetEncoder(BaseEstimator, TransformerMixin):
                     self.value_counts[feature, value] = len(y_for_value)
 
                     for p in self.p:
-                        # interpolation{‘linear’, ‘lower’, ‘higher’, ‘midpoint’, ‘nearest’}
-                        quantile=np.quantile(y_for_value, p,interpolation='linear')
-                        print(f'feature={feature}, value={value}, p={p},quantile={quantile}, counts={self.value_counts[feature, value]} \n '
-                              f'eta={self.value_counts[feature, value]/self.N}'
-                              f'\n y={y_for_value}')
-                        self.value_quantiles[feature, value, p] =quantile
+                        # quantiles calculation
+                        quantile = np.quantile(y_for_value, p, interpolation='linear')
+                        self.value_quantiles[feature, value, p] = quantile
         return self
 
     def transform(self, X):
@@ -150,8 +147,7 @@ class PercentileTargetEncoder(BaseEstimator, TransformerMixin):
 
         for feature in self.features:
             # Replace never seen values as 'UNKNOWN'
-            X[feature] = X[feature].apply(lambda value:
-                                          value if value in self.features_unique[feature] else 'UNKNOWN')
+            X[feature] = X[feature].apply(lambda value: value if value in self.features_unique[feature] else 'UNKNOWN')
             for p in self.p:
                 for m in self.m:
                     # Prepare new columns names for percentile values
@@ -195,11 +191,9 @@ if __name__ == '__main__':
     df = pd.DataFrame({
         'x_0': ['a'] * 5 + ['b'] * 5,
         'x_1': ['c'] * 9 + ['d'] * 1,
-        # 'x_0': ['a','a','a','a','a','b','b','b','b','b'] ,
-        # 'x_1': ['c','c','c','c','c','c','c','c','c','d'],
         'y': [1, 1, 1, 1, 0, 1, 0, 0, 0, 0]
     })
-    print('aaaaaaa',df.head(10))
+    print(df.head(10))
     pte = PercentileTargetEncoder(features=None,
                                   ignored_features=None,
                                   p=[0.8], m=[3],
@@ -208,11 +202,6 @@ if __name__ == '__main__':
                                   use_internal_yeo_johnson=False)
     out = pte.fit_transform(X=df[['x_0', 'x_1']], y=df['y'])
     print(out)
-    print(pte.global_quantiles)
-    print(pte.value_quantiles)
-    # dataframe with unknown value 'V' in column x_0
-    # and missing value in column x_1
-    """
 
     df_test = pd.DataFrame({
         'x_0': ['a'] * 5 + ['V'] * 1 + ['b'] * 4,
@@ -221,4 +210,3 @@ if __name__ == '__main__':
     })
     out_test = pte.transform(X=df_test)
     print(out_test)
-"""
