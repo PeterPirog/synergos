@@ -60,7 +60,7 @@ use_internal_yeo_johnson: if True, yeo-johnson transformation is used to normali
 
 
 ```
-#Developing Synergos
+# Developing Synergos
 To install Synergos, along the tools you need to develop and run tests, run the following in your virtualenv:
 ```bash
 $ pip install -e .[dev]
