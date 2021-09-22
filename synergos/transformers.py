@@ -120,7 +120,7 @@ class PercentileTargetEncoder(BaseEstimator, TransformerMixin):
                 if value_counts == 0:
                     for p in self.p:
                         # replace missing value by quantile for all data
-                        self.value_quantiles[feature, value, p] = np.quantile(y, p)
+                        self.value_quantiles[feature, value, p] = self.global_quantiles[p]
 
                         # set value 1 for 'UNKNOWN'  and 'MISSING'values
                         self.value_counts[feature, value] = 1
@@ -130,12 +130,17 @@ class PercentileTargetEncoder(BaseEstimator, TransformerMixin):
                     # Find y values for specified feature and specified value
                     idx = X[feature] == value
                     # value_not_exist_in_data=sum(idx.astype(int))
-                    y_group = y[idx]
+                    y_for_value = y[idx].copy()
                     # counts for every feature and every value
-                    self.value_counts[feature, value] = len(y_group)
+                    self.value_counts[feature, value] = len(y_for_value)
 
                     for p in self.p:
-                        self.value_quantiles[feature, value, p] = np.quantile(y_group, p)
+                        # interpolation{‘linear’, ‘lower’, ‘higher’, ‘midpoint’, ‘nearest’}
+                        quantile=np.quantile(y_for_value, p,interpolation='linear')
+                        print(f'feature={feature}, value={value}, p={p},quantile={quantile}, counts={self.value_counts[feature, value]} \n '
+                              f'eta={self.value_counts[feature, value]/self.N}'
+                              f'\n y={y_for_value}')
+                        self.value_quantiles[feature, value, p] =quantile
         return self
 
     def transform(self, X):
@@ -182,6 +187,7 @@ class PercentileTargetEncoder(BaseEstimator, TransformerMixin):
         q = self.value_quantiles[feature, value, p]
         # mQ - mean quantile for whole dataset
         mQ = self.global_quantiles[p]
+        # print(f'eth={eta}')
         return (mQ+m*eta*q)/(1+m*eta)
 
 
@@ -189,19 +195,25 @@ if __name__ == '__main__':
     df = pd.DataFrame({
         'x_0': ['a'] * 5 + ['b'] * 5,
         'x_1': ['c'] * 9 + ['d'] * 1,
+        # 'x_0': ['a','a','a','a','a','b','b','b','b','b'] ,
+        # 'x_1': ['c','c','c','c','c','c','c','c','c','d'],
         'y': [1, 1, 1, 1, 0, 1, 0, 0, 0, 0]
     })
-    print(df.head())
+    print('aaaaaaa',df.head(10))
     pte = PercentileTargetEncoder(features=None,
                                   ignored_features=None,
-                                  p=[0.5], m=[2],
+                                  p=[0.8], m=[3],
                                   remove_original=True,
                                   return_df=True,
                                   use_internal_yeo_johnson=False)
     out = pte.fit_transform(X=df[['x_0', 'x_1']], y=df['y'])
     print(out)
+    print(pte.global_quantiles)
+    print(pte.value_quantiles)
     # dataframe with unknown value 'V' in column x_0
     # and missing value in column x_1
+    """
+
     df_test = pd.DataFrame({
         'x_0': ['a'] * 5 + ['V'] * 1 + ['b'] * 4,
         'x_1': ['c'] * 8 + [''] * 1 + ['d'] * 1,
@@ -209,3 +221,4 @@ if __name__ == '__main__':
     })
     out_test = pte.transform(X=df_test)
     print(out_test)
+"""

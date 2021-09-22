@@ -25,11 +25,19 @@ def test_encoding_is_set1_correct():
     calculated_values, correct_values = \
         get_calculated_outputs(sheet_name='Set1', m=2, p=0.5)
     differences = np.abs(np.sum(calculated_values - correct_values))
-    assert differences <= 0
+    assert differences <= 1e-8
 
 
 def test_encoding_is_set2_correct():
     calculated_values, correct_values =\
         get_calculated_outputs(sheet_name='Set2', m=5, p=0.5)
     differences = np.abs(np.sum(calculated_values - correct_values))
-    assert differences <= 0
+    assert differences <= 1e-8
+
+def test_encoding_is_set3_correct():
+    calculated_values, correct_values =\
+        get_calculated_outputs(sheet_name='Set3', m=3, p=0.8)
+    print(f'calculated_values={calculated_values}')
+    print(f'correct_values={correct_values}')
+    differences = np.abs(np.sum(calculated_values - correct_values))
+    assert differences <= 1e-8
