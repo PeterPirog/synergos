@@ -14,7 +14,7 @@ class PercentileTargetEncoder(BaseEstimator, TransformerMixin):
                  m=1,
                  remove_original=True,
                  return_df=True,
-                 use_internal_yeo_johnson=False,
+                 use_internal_yeo_johnson=True,
                  verbose=True):
         super().__init__()
         self.features = features  # selected categorical features
