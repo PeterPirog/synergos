@@ -15,6 +15,7 @@ features: list of features for encoding, if None transformer find categorical va
 
 param: 
 ignored_features: list of ignored features when features are found automatically with option features = None
+
 param: 
 p: percentil value to calculate new feature, default value is 0.5 (median), range  0<p<1, single value or list of values
 
