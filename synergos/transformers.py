@@ -5,7 +5,7 @@ from scipy import stats
 from sklearn.base import BaseEstimator, TransformerMixin
 pd.set_option('display.max_columns', None)
 
-
+# https://maxhalford.github.io/blog/target-encoding/
 class PercentileTargetEncoder(BaseEstimator, TransformerMixin):
     def __init__(self, features=None,
                  ignored_features=None,
